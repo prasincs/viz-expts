@@ -1,0 +1,12 @@
+chr - X X 0 26.0
+chr - Y Y 26.0 88.0
+chr - Z Z 88.0 133.0
+band X s1 s1 0 10.0
+band X s2 s2 10.0 21.0
+band X s3 s3 21.0 26.0
+band Y s1 s1 26.0 46.0
+band Y s2 s2 46.0 81.0
+band Y s3 s3 81.0 88.0
+band Z s1 s1 88.0 118.0
+band Z s2 s2 118.0 123.0
+band Z s3 s3 123.0 133.0

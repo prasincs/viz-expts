@@ -1,0 +1,3 @@
+segdup0 X 0 10.0
+segdup0 Y 26.0 46.0
+segdup0 Z 88.0 118.0
