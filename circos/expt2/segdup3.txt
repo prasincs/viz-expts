@@ -1,0 +1,3 @@
+segdup003 hsX 201 400
+segdup003 hsY 1201 1400
+segdup003 hsZ 2601 2800
