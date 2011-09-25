@@ -1,5 +1,5 @@
-chr - hsX X 0 1000 orange
-chr - hsY Y 1000 2500 red
+chr - hsX X 0 700 orange
+chr - hsY Y 1000 1700 red
 chr - hsZ Z 2500 3000 blue
 band hsX band1 band1 0 100 grey
 band hsX band2 band2 101 200 red

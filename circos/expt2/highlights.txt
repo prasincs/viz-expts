@@ -1,0 +1,3 @@
+hsX 0 1000 fill_color=green
+hsY 1001 2500 fill_color=blue
+hsZ 2501 3000 fill_color=red
