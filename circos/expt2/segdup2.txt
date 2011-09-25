@@ -1,0 +1,2 @@
+segdup002 hsX 101 200
+segdup002 hsY 1101 1200
