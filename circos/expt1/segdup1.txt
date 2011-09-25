@@ -1,0 +1,3 @@
+segdup001 hsX 0 100
+segdup001 hsY 1001 1100
+segdup001 hsZ 2501 2550
