@@ -1,4 +1,3 @@
-X 0 76 fill_color=green
-Y 77 195 fill_color=green
-Z 196 306 fill_color=green
-A 307 356 fill_color=green
+X 0 42 fill_color=green
+Y 43 125 fill_color=green
+Z 126 208 fill_color=green

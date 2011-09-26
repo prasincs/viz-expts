@@ -1,5 +1,4 @@
 segdup0 X 0 10
-segdup0 Y 77 97
-segdup0 Z 196 226
-segdup0 A 307 310
+segdup0 Y 43 63
+segdup0 Z 126 146
 segdup0 X 0 10

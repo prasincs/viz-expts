@@ -1,5 +1,4 @@
 segdup1 X 11 22
-segdup1 Y 98 133
-segdup1 Z 227 232
-segdup1 A 311 316
+segdup1 Y 64 99
+segdup1 Z 147 182
 segdup1 X 11 22

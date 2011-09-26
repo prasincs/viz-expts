@@ -1,13 +1,16 @@
+#!/usr/bin/env python
 import csv
 from string import strip
 from Cheetah.Template import Template
 import os,subprocess
+from histograms import *
 dataDir = 'data'
 templatesDir = 'templates'
 htmlDir = 'html'
 colors = ['red', 'green', 'blue', 'grey', 'black', 'orange']
 
 CIRCOS_EXEC = "circos"
+
 
 class CsvToCircos(object):
  
@@ -22,6 +25,7 @@ class CsvToCircos(object):
   def writeFiles(self):
     self.openFile()
     self.writeKaryotypesFile()
+    generate_histograms()
     self.writeConfigFiles()
 
   def writeConfigFiles(self, rows = None):
@@ -38,7 +42,7 @@ class CsvToCircos(object):
        f.write(Template(file=templatesDir+"/circos.conf.tmpl", \
            searchList = [{'units': units, 'links': items}]).respond())
 
-  def runCircos(self,outputFileName="circos.conf"):
+  def runCircos(self,outputFileName="circos.png"):
     print "running circos"
     savedPath = os.getcwd()
     os.chdir(dataDir)
@@ -125,5 +129,9 @@ class CsvToCircos(object):
 if __name__ == "__main__":
   csvToCircos = CsvToCircos('data.csv')
   csvToCircos.writeFiles()
-  csvToCircos.runCircos()
+  process = csvToCircos.runCircos()
+  process.poll()
+  for line in process.communicate():
+    if line != None:
+      print line
 
