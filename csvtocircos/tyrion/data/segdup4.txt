@@ -1,0 +1,5 @@
+segdup4 X 45 60
+segdup4 Y 160 177
+segdup4 Z 265 285
+segdup4 A 325 335
+segdup4 X 45 60

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block javascript %}
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+  $.get('/proc', function(data){
+    $("#circos").html('<img src="/static/images/circos.png" width="400px" height="400px" />');
+  });
+  $("#update").click(function(){
+    var checkboxes = $("#controls :checkbox[checked]");
+    ids = $.map(checkboxes, function(val, i){
+      return $(val).attr("id");
+    });
+    console.log(ids);
+
+    $.ajax({
+    type: 'POST',
+    url: '/updateGraph',
+    data: JSON.stringify({items:ids}),
+    beforeSend: function(){
+      $("#loading").html("generating image ....");
+    },
+    success: function(data){
+        console.log(data);
+        $.ajax({
+            type: 'GET', 
+            url:'/proc', 
+            success: function(data){
+              console.log("success!");
+              d = new Date();
+              $("#circos").html('<img src="/static/images/circos.png?'+d.getTime()+'" width="400px" height="400px" />');
+            },
+            complete: function(){
+              $("#loading").html('');
+              }
+            });
+        },
+    dataType: "json"
+    });
+
+    return false;
+  });
+
+});
+</script>
+{% endblock %}
+{% block content %}
+
+<div id="wrapper">
+<ul id="controls">
+{% for item in items %}
+<li><input type="checkbox"  id="{{item}}" checked>{{item}}</input></li>
+{% endfor %}
+<input id="update" type="submit" value="update"/>
+</ul>
+<div id="loading"></div>
+<div id="circos">
+Generating Image
+<!--<img src="/static/images/circos.png" width="400px" height="400px"/>-->
+</div>
+</div>
+{% endblock %}

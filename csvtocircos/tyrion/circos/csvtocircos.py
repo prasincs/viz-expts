@@ -29,7 +29,8 @@ class CsvToCircos(object):
       rows = self.rowNames
     with open(dataDir+'/circos.conf','w') as f:
        items = []
-       for i in range(len(rows)):
+       rr = [self.rowNames.index(i) for i in rows]
+       for i in rr:
           items.append ({'id': i, 'color': colors[i]})
        units = self.total/(len(self.rowNames)*len(self.fieldNames)*10)
        if units < 1:
@@ -38,10 +39,12 @@ class CsvToCircos(object):
            searchList = [{'units': units, 'links': items}]).respond())
 
   def runCircos(self,outputFileName="circos.conf"):
+    print "running circos"
     savedPath = os.getcwd()
     os.chdir(dataDir)
-    p = subprocess.Popen([CIRCOS_EXEC, "-conf", "circos.conf", "-outputfile", outputFileName])
+    p = subprocess.Popen([CIRCOS_EXEC, "-conf", "circos.conf", "-outputfile", outputFileName], stdout=subprocess.PIPE)
     os.chdir(savedPath)
+    return p
 
 
   def openFile(self):

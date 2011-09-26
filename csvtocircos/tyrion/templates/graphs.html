@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block javascript %}
+<script type="text/javascript">
+  var statId = "BA";
+  var statName = "Batting Average";
+  var statType = "battingStats";
+  var cacheData = [];
+  var selectedTeams = {};
+
+  function addNewTeamEntry(){
+    $("#teamNameSpace").append('<input class="teamName"/>');
+    $(".teamName").autocomplete(
+        {source:teams, 
+          autoFill:true,
+          matchContains: true,
+          select: function(event, ui){
+            teamName = ui.item.value;
+            teamId = ui.item.id;
+            console.log ("selected value "+ teamId)
+            selectedTeams[teamId] = teamName;
+            getGraphs(teamId, teamName);
+            this.disabled = true;
+            $(this).attr('id','teamName-'+teamId);
+            $(this).after('<a href="#" onclick="removeFromChart(\''+teamId+'\')" id="remover-'+teamId+'">X</a>');
+            addNewTeamEntry();
+          },
+        });
+  
+  }
+  
+  var chart= false;
+  
+  function removeFromChart(id){
+    delete selectedTeams[id];
+    options.series = $.grep(options.series, function(item, index){
+        if (item.id === id) {
+          return false;
+          }
+        return true;
+      });
+    updateChart();
+    $('#teamName-'+id).remove();
+    $("#remover-"+id).remove();
+  }  
+
+  var options = {
+          chart: {renderTo: 'graphSpace',
+            defaultSeriesType: 'line'    
+          },
+        title: { text: 'Comparative Batting Averages'},
+        xAxis: {
+         text: "Season",
+         categories: []
+        },
+        yAxis: {
+          title: {
+              text: statId
+          }
+       },
+      series: []
+  };
+ 
+  function resetOptions(stat){
+    options = {
+          chart: {renderTo: 'graphSpace',
+            defaultSeriesType: 'line'    
+          },
+        title: { text: 'Comparative '+ stat},
+        xAxis: {
+         text: "Season",
+         categories: []
+        },
+        yAxis: {
+          title: {
+              text: stat
+          }
+       },
+      series: []
+  };
+}
+  function updateStats(){
+    $.each(selectedTeams, function(id, name){
+        getGraphs(id, name);
+      });
+  }
+
+
+  function updateChart(){
+    chart = new Highcharts.Chart(options);
+  } 
+  
+  function getGraphs(teamId, teamName){
+    function cback(data){
+    years = []
+   stats = []
+    $.each(data, function(index, item){
+      years.push(item.season_id);
+      stats.push({ 
+        x: item.season_id,  
+        y: item[statId.toLowerCase()]});
+    });
+    ba = {id: teamId, 
+    name: teamName, 
+    data: stats
+    };
+      options.xAxis.categories = years
+      options.series.push(ba);
+      updateChart();
+    };
+  arr = [statType, statId, teamId];
+  url = arr.join('/');
+  console.log(url);
+  if (cacheData[url] !== undefined){
+    console.log ('getting from cache');
+    cback(cacheData[url]);
+  
+  }
+  else { 
+    $.getJSON('/data/'+url, function(data){
+      cacheData[url] = data;
+      cback(data);
+    });
+  }
+}
+
+
+teams = [
+    {% for team in teams %}
+    {% if not forloop.first %},{% endif %} { id: "{{team.team_id}}", value:  "{{team.full_name}}"}
+      {% endfor %}
+      ];
+{% autoescape off %}
+battingStats = {{ battingStats }};
+pitchingStats = {{pitchingStats}};
+{% endautoescape %}
+
+  function resetNewTeamEntry(){
+    selectedTeams = {};
+    $("#teamNameSpace").html('');
+    addNewTeamEntry();
+    updateStatId();
+    updateStats();
+    
+  } 
+  
+  function updateStatsTracked(){
+    statDict = eval (statType);
+    options = '';
+    $.each(statDict, function (index, item){
+      options += "<option value='"+item.id+"'>"+item.name+"</option>";
+    });
+    $("#statId").html(options);
+    updateStatId();
+  }
+  
+  function updateStatId(){
+                    statId = $("#statId").val();
+                    resetOptions(statId);
+                    updateChart();
+  }
+
+
+ $(document).ready(function(){
+   $("#statId").change(function(){
+                      updateStatId();
+                      updateStats();
+                      //resetNewTeamEntry();
+    });
+    $("#statType").change(function(){
+                    statType = $(this).val();
+                    resetOptions(statId);
+                    updateStatsTracked();
+                    updateStats();
+                    
+                    //resetNewTeamEntry();
+    });
+    updateStatsTracked();
+    addNewTeamEntry();
+    
+ });
+</script>
+{% endblock %}
+{% block content %}
+<select id="statType">
+  <option value="battingStats">Batting</option>
+  <option value="pitchingStats">Pitching</option>
+</select>
+<select id="statId">
+</select>
+<a href="#" onclick="resetNewTeamEntry(); return false;">Clear Teams</a>
+<div id="teamSelectionSpace">
+  <div id="teamNameSpace">
+  </div>
+  <!--<a href="#" onclick="addNewTeamEntry(); return false;" id="addNewTeam">add</a> -->
+</div>
+<div id="graphSpace"></div>
+{% endblock %}

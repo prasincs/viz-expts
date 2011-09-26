@@ -1,0 +1,5 @@
+segdup3 X 29 44
+segdup3 Y 142 159
+segdup3 Z 244 264
+segdup3 A 319 324
+segdup3 X 29 44

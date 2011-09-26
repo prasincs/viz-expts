@@ -32,7 +32,7 @@ auto_alpha_steps = 5
 
 karyotype  = karyotype.txt
 
-chromosomes_units = 1
+chromosomes_units = $units
 chromosomes_display_default = yes
 
 <links>
@@ -53,18 +53,14 @@ flat            = yes
 stroke_color    = black
 stroke_thickness= 1
 
-<link segdup0>
+#for $link in $links
+<link segdup${link.id}>
 show            = yes
 thickness       = 5
-color           = red_a2
-file            = segdup0.txt
+color           = ${link.color}_a2
+file            = segdup${link.id}.txt
 </link>
-<link segdup1>
-show            = yes
-thickness       = 5
-color           = green_a2
-file            = segdup1.txt
-</link>
+#end for
 </links>
 
 

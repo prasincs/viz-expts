@@ -1,0 +1,28 @@
+chr - X X 0 76
+chr - Y Y 77 195
+chr - Z Z 196 306
+chr - A A 307 356
+band X s1 s1 0 10 red
+band X s2 s2 11 22 green
+band X s3 s3 23 28 blue
+band X s4 s4 29 44 grey
+band X s5 s5 45 60 black
+band X s6 s6 61 76 orange
+band Y s1 s1 77 97 red
+band Y s2 s2 98 133 green
+band Y s3 s3 134 141 blue
+band Y s4 s4 142 159 grey
+band Y s5 s5 160 177 black
+band Y s6 s6 178 195 orange
+band Z s1 s1 196 226 red
+band Z s2 s2 227 232 green
+band Z s3 s3 233 243 blue
+band Z s4 s4 244 264 grey
+band Z s5 s5 265 285 black
+band Z s6 s6 286 306 orange
+band A s1 s1 307 310 red
+band A s2 s2 311 316 green
+band A s3 s3 317 318 blue
+band A s4 s4 319 324 grey
+band A s5 s5 325 335 black
+band A s6 s6 336 356 orange

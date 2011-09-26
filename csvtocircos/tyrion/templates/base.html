@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css"></link>
+<link rel="stylesheet" href="/static/css/tyrion.css" type="text/css"/>
+    <title>PitchWarrior</title>
+    {% block javascript %}
+    {% endblock %}
+    {% block css %}
+    {% endblock %}
+  </head>
+  <body>
+      <div id="header">
+          <h1>PitchWarrior: {{ app|default:"Tyrion" }}</h1>
+      </div>
+      <div id="content">
+        <div id="nav">
+          <a href="{% url home %}">Home</a>
+        </div>
+
+          {% block content %}
+          {% endblock %}
+      </div>
+      <div id="footer">
+          {% block footer %}
+          <hr>
+          Tyrion
+          {% endblock %}
+      </div>
+  </body>
+</html>

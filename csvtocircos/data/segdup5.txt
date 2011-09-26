@@ -1,0 +1,5 @@
+segdup5 X 61 76
+segdup5 Y 178 195
+segdup5 Z 286 306
+segdup5 A 336 356
+segdup5 X 61 76
